@@ -1,0 +1,5 @@
+Marilén quiere ayudar a su hijo con una tarea del jardín de infantes. Le han pedido que lleve materiales para pintar una serie de formas geométricas con colores. Habrá un grupo de formas que pintará de un color, y otro grupo que pintará de otro color, y así sucesivamente. Ella dispone por anticipado de las medidas y ubicaciones precisas de cada figura, pero necesita saber cuántos pomos de cada témpera debe comprar.
+Sabiendo que un pomo de témpera tiene un poder cubritivo de 100cm2, y que no puede comprar "fracciones de pomo", se te pide que le muestres una forma de calcular las cantidades a comprar utilizando el patrón de diseño Composite.
+Existe la posibilidad de que haya figuras con huecos de la forma de otra figura. Por lo tanto, no queremos comprar témpera de más. Si hubiera, por ejemplo, un hueco circular en un cuadrado, no deberíamos comprar témpera para ese hueco.
+
+Nota: Las figuras no se solapan entre sí. Cada figura compuesta estará pintada de un sólo color.
