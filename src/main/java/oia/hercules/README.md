@@ -47,5 +47,5 @@ out:
 # Diagrama
 
 <p align="center">
-  <img width="800" src="./src/unlam/progava/oia/diagrama-de-clases.png" alt="Diagrama">
+  <img width="800" src="./src/main/java/oia/hercules/docs/diagrama-de-clases.png" alt="Diagrama">
 </p>
