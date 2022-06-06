@@ -4,22 +4,22 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class MaxMonticulo<T extends Comparable<T>> implements ColaDePrioridad<T> {
+public class MinMonticulo<T extends Comparable<T>> implements ColaDePrioridad<T> {
 
 	private List<T> heap;
 	private int size;
 
-	public MaxMonticulo() {
+	public MinMonticulo() {
 		heap = new ArrayList<>();
 		size = 0;
 	}
 
-	private boolean isBigger(int i, int j) {
-		return heap.get(i).compareTo(heap.get(j)) > 0;
+	private boolean isSmaller(int i, int j) {
+		return heap.get(i).compareTo(heap.get(j)) < 0;
 	}
 
 	private void sortUp() {
-		for (int i = this.size; i > 0 && isBigger(i, (i - 1) / 2); i = (i - 1) / 2) {
+		for (int i = this.size; i > 0 && isSmaller(i, (i - 1) / 2); i = (i - 1) / 2) {
 			Collections.swap(heap, i, ((i - 1) / 2));
 		}
 	}
@@ -36,11 +36,11 @@ public class MaxMonticulo<T extends Comparable<T>> implements ColaDePrioridad<T>
 			childLeft = (i * 2) + 1;
 			childRight = (i * 2) + 2;
 
-			if (childLeft < this.size && isBigger(childLeft, i)) {
+			if (childLeft < this.size && isSmaller(childLeft, i)) {
 				i = childLeft;
 			}
 
-			if (childRight < this.size && isBigger(childRight, i)) {
+			if (childRight < this.size && isSmaller(childRight, i)) {
 				i = childRight;
 			}
 
