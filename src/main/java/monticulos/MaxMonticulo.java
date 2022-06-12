@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class MaxMonticulo<T extends Comparable<T>> implements ColaDePrioridad<T> {
+public class MaxMonticulo<T extends Comparable<? super T>> implements ColaDePrioridad<T> {
 
 	private List<T> heap;
 	private int size;
@@ -85,6 +85,11 @@ public class MaxMonticulo<T extends Comparable<T>> implements ColaDePrioridad<T>
 	@Override
 	public int size() {
 		return this.size;
+	}
+	
+	@Override
+	public boolean isEmpty() {
+		return (this.size == 0);
 	}
 
 	@Override
