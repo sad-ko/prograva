@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import grafos.algoritmos.MSP;
 
-public class PrimTests {
+public class KruskalTests {
 
 	@Test
 	public void test01() {
@@ -17,7 +17,7 @@ public class PrimTests {
 				{3,2,1,0}
 		};
 		Grafo grafo = new MatrizAdyacente(g);
-		Grafo result = MSP.prim(grafo, new Arista(3, 0));
+		Grafo result = MSP.kruskal(grafo);
 		
 		assertEquals(5, result.costo(), 0);
 	}
@@ -35,7 +35,7 @@ public class PrimTests {
 		};
 		
 		Grafo grafo = new MatrizAdyacente(g);
-		Grafo result = MSP.prim(grafo, new Arista(3, 0));
+		Grafo result = MSP.kruskal(grafo);
 
 		assertEquals(39, result.costo(), 0);
 	}
@@ -53,7 +53,7 @@ public class PrimTests {
 		};
 		
 		Grafo grafo = new MatrizAdyacente(g);
-		Grafo result = MSP.prim(grafo, new Arista(3, 0));
+		Grafo result = MSP.kruskal(grafo);
 		
 		assertEquals(26, result.costo(), 0);
 	}
@@ -70,9 +70,22 @@ public class PrimTests {
 		};
 		
 		Grafo grafo = new MatrizAdyacente(g);
-		Grafo result = MSP.prim(grafo, new Arista(3, 0));
+		Grafo result = MSP.kruskal(grafo);
 
 		assertEquals(14, result.costo(), 0);
 	}
+	
+	@Test
+	public void test05() {
+		Grafo grafo = new ListaAdyacente(4);
+		grafo.setArista(0, 1, 1);
+		grafo.setArista(1, 2, 1);
+		grafo.setArista(2, 3, 1);
+		
+		Grafo result = MSP.kruskal(grafo);
+
+		assertEquals(3, result.costo(), 0);
+	}
+
 
 }

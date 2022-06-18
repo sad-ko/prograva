@@ -5,8 +5,8 @@ import java.util.Comparator;
 import grafos.Grafo;
 import grafos.GrafoLista;
 import grafos.MatrizAdyacente;
+import grafos.algoritmos.MSP;
 import grafos.Arista;
-import grafos.MSP;
 
 public class Plan {
 

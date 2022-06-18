@@ -1,6 +1,8 @@
 package grafos;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class MatrizAdyacente implements Grafo {
 
@@ -47,6 +49,19 @@ public class MatrizAdyacente implements Grafo {
 	@Override
 	public Double getArista(int desde, int hasta) {
 		return grafo[desde][hasta];
+	}
+
+	@Override
+	public List<Integer> getAristasDe(int desde) {
+		List<Integer> aristas = new ArrayList<>();
+
+		for (int i = 0; i < grafo[desde].length; i++) {
+			if (grafo[desde][i] != null) {
+				aristas.add(i);
+			}
+		}
+
+		return aristas;
 	}
 
 	@Override

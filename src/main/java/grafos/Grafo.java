@@ -1,5 +1,7 @@
 package grafos;
 
+import java.util.List;
+
 public interface Grafo {
 
 	/**
@@ -35,5 +37,7 @@ public interface Grafo {
 	 * @return Double - Costo de la Arista o null si no existe.
 	 */
 	Double getArista(int desde, int hasta);
+
+	List<Integer> getAristasDe(int desde);
 
 }

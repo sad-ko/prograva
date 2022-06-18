@@ -17,6 +17,16 @@ public class ListaAdyacente implements GrafoLista {
 		}
 	}
 
+	public ListaAdyacente(Arista[] grafo, int length) {
+		this(length);
+
+		for (int i = 0; i < grafo.length; i++) {
+			Arista arista = grafo[i];
+			this.setArista(arista.getDesde(), arista.getHasta(), arista.getCosto());
+			this.setArista(arista.getHasta(), arista.getDesde(), arista.getCosto());
+		}
+	}
+
 	@Override
 	public int size() {
 		return grafo.length;
@@ -43,6 +53,17 @@ public class ListaAdyacente implements GrafoLista {
 		}
 
 		return null;
+	}
+
+	@Override
+	public List<Integer> getAristasDe(int desde) {
+		List<Integer> aristas = new ArrayList<>();
+
+		for (Arista arista : grafo[desde]) {
+			aristas.add(arista.getHasta());
+		}
+
+		return aristas;
 	}
 
 	@Override
