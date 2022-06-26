@@ -20,39 +20,42 @@ public class MSP {
 
 	private MSP() {}
 
+	//O((n+a).log(n))
 	public static GrafoLista prim(Grafo grafo, Arista raiz) {
 		GrafoLista resultado = new ListaAdyacente(grafo.size());
 
-		List<Double> costos = new ArrayList<>(grafo.size());
-		List<Boolean> visitado = new ArrayList<>(grafo.size());
+		double[] costos = new double[grafo.size()];
+		boolean[] visitado = new boolean[grafo.size()];
 
+		//O(n)
 		for (int i = 0; i < grafo.size(); i++) {
-			costos.add(Double.MAX_VALUE);
-			visitado.add(false);
+			costos[i] = Double.MAX_VALUE;
 		}
 
 		// Guardamos los Nodos a revisar en una Cola de Prioridad para optimizar el
 		// tiempo de busqueda para ir al siguiente nodo con el menor costo.
 		ColaDePrioridad<Arista> queue = new MinMonticulo<>();
-		queue.insert(raiz);
+		queue.insert(raiz); //O(1) -> Primer elemento insertado
 
-		while (!queue.isEmpty()) {
-			Arista current = queue.remove();
-			int currentID = current.getHasta();
-			visitado.set(currentID, true);
+		//O(n.log(n)) + O(a.log(n)) => O((n+a).log(n))
+		while (!queue.isEmpty()) { //O(n)
+			Arista current = queue.remove(); //O(log(n))
+			int u = current.getHasta();
+			visitado[u] = true;
 
 			double minCosto = current.getCosto();
 
-			if (minCosto < costos.get(currentID)) {
-				costos.set(currentID, minCosto);
-				resultado.setArista(current.getDesde(), currentID, minCosto);
+			if (minCosto < costos[u]) {
+				costos[u] = minCosto;
+				resultado.setArista(current.getDesde(), u, minCosto);
 			}
 
-			List<Integer> aristas = grafo.getAristasDe(currentID);
-			for (Integer arista : aristas) {
-				if (visitado.get(arista).equals(Boolean.FALSE)) {
-					Double costo = grafo.getArista(currentID, arista);
-					queue.insert(new Arista(currentID, arista, costo));
+			List<Integer> aristas = grafo.getAristasDe(u); //O(n)
+			//O(a.log(n))
+			for (Integer arista : aristas) { //O(a)
+				if (!visitado[arista]) {
+					Double costo = grafo.getArista(u, arista);
+					queue.insert(new Arista(u, arista, costo)); //O(log(n))
 				}
 			}
 		}
@@ -60,26 +63,30 @@ public class MSP {
 		return resultado;
 	}
 
+	//O((a+n).log(n))
 	public static GrafoLista kruskal(Grafo grafo) {
 		GrafoLista resultado = new ListaAdyacente(grafo.size());
-		ColaDePrioridad<Arista> queue = new MinMonticulo<>();
+		List<Arista> lista = new ArrayList<>();
 		UnionFind[] set = new UnionFind[grafo.size()];
 
-		for (int i = 0; i < grafo.size(); i++) {
+		for (int i = 0; i < grafo.size(); i++) { //O(n)
 			set[i] = new UnionFind(i);
 
-			List<Integer> aristas = grafo.getAristasDe(i);
-			for (Integer arista : aristas) {
+			List<Integer> aristas = grafo.getAristasDe(i); //O(n)
+			for (Integer arista : aristas) { //O(a)
 				Double costo = grafo.getArista(i, arista);
-				queue.insert(new Arista(i, arista, costo));
+				lista.add(new Arista(i, arista, costo));
 			}
 		}
+		
+		lista.sort(Arista::compareTo); //O(n.log(n))
 
-		while (!queue.isEmpty()) {
-			Arista current = queue.remove();
+		//O(a.log(n))
+		for (Arista current : lista) { //O(a)
 			int desde = current.getDesde();
 			int hasta = current.getHasta();
 
+			//O(log(n))
 			if (!set[desde].find().equals(set[hasta].find())) {
 				resultado.setArista(desde, hasta, current.getCosto());
 				set[desde].union(set[hasta]);

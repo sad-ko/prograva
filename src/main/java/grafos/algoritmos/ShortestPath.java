@@ -17,12 +17,14 @@ public class ShortestPath {
 		return this.dijkstra(grafo, root, null);
 	}
 
+	// O((n+a).log(n))
 	public double[] dijkstra(final Grafo grafo, final int root, final List<Integer> blacklist) {
 		ColaDePrioridad<Arista> queue = new MinMonticulo<>();
 		double[] costos = new double[grafo.size()];
 		boolean[] visitados = new boolean[grafo.size()];
 		this.antecesores = new int[grafo.size()];
 
+		// O(n)
 		for (int i = 0; i < grafo.size(); i++) {
 			double costo = (i == root) ? 0 : Double.MAX_VALUE;
 			costos[i] = costo;
@@ -30,16 +32,19 @@ public class ShortestPath {
 			visitados[i] = false;
 		}
 
+		// O(1) -> Por ser el primer elemento
 		queue.insert(new Arista(root, 0));
 
-		while (!queue.isEmpty()) {
-			Arista current = queue.remove();
+		// O(n.log(n)) + O(a.log(n)) => O((n+a).log(n))
+		while (!queue.isEmpty()) { // O(n)
+			Arista current = queue.remove(); // O(log(n))
 			int u = current.getHasta();
 			visitados[u] = true;
 
-			List<Integer> aristas = grafo.getAristasDe(u);
+			List<Integer> aristas = grafo.getAristasDe(u); // O(n)
 
-			for (Integer arista : aristas) {
+			// O(a*log(n))
+			for (Integer arista : aristas) { // O(a)
 				if (blacklist != null && blacklist.contains(arista)) {
 					continue;
 				}
@@ -49,7 +54,7 @@ public class ShortestPath {
 				if (!visitados[arista]) {
 					double nuevoCosto = costo + current.getCosto();
 					if (nuevoCosto < costos[arista]) {
-						queue.insert(new Arista(u, arista, nuevoCosto));
+						queue.insert(new Arista(u, arista, nuevoCosto)); // O(log(n))
 						antecesores[arista] = u;
 						costos[arista] = nuevoCosto;
 					}
@@ -76,6 +81,56 @@ public class ShortestPath {
 		}
 
 		return lista;
+	}
+
+	// O(n³)
+	public static double[][] floyd(Grafo grafo) {
+		double[][] result = new double[grafo.size()][grafo.size()];
+
+		// O(n²)
+		for (int i = 0; i < result.length; i++) { // O(n)
+			for (int j = 0; j < result.length; j++) { // O(n)
+				Double costo = grafo.getArista(i, j);
+				result[i][j] = (costo != null) ? costo : Double.MAX_VALUE;
+			}
+			result[i][i] = 0;
+		}
+
+		// O(n³)
+		for (int k = 0; k < result.length; k++) { // O(n)
+			for (int i = 0; i < result.length; i++) { // O(n)
+				for (int j = 0; j < result.length; j++) { // O(n)
+					double costo = result[i][k] + result[k][j];
+					result[i][j] = (costo < result[i][j]) ? costo : result[i][j];
+				}
+			}
+		}
+
+		return result;
+	}
+
+	// O(n³)
+	public static boolean[][] warshall(Grafo grafo) {
+		boolean[][] result = new boolean[grafo.size()][grafo.size()];
+
+		// O(n²)
+		for (int i = 0; i < result.length; i++) { // O(n)
+			for (int j = 0; j < result.length; j++) { // O(n)
+				Double costo = grafo.getArista(i, j);
+				result[i][j] = (costo != null);
+			}
+		}
+
+		// O(n³)
+		for (int k = 0; k < result.length; k++) { // O(n)
+			for (int i = 0; i < result.length; i++) { // O(n)
+				for (int j = 0; j < result.length; j++) { // O(n)
+					result[i][j] = (result[i][j] || (result[i][k] && result[k][j]));
+				}
+			}
+		}
+
+		return result;
 	}
 
 }

@@ -23,7 +23,6 @@ public class ListaAdyacente implements GrafoLista {
 		for (int i = 0; i < grafo.length; i++) {
 			Arista arista = grafo[i];
 			this.setArista(arista.getDesde(), arista.getHasta(), arista.getCosto());
-			this.setArista(arista.getHasta(), arista.getDesde(), arista.getCosto());
 		}
 	}
 
@@ -60,7 +59,9 @@ public class ListaAdyacente implements GrafoLista {
 		List<Integer> aristas = new ArrayList<>();
 
 		for (Arista arista : grafo[desde]) {
-			aristas.add(arista.getHasta());
+			if (arista.getHasta() != desde) {
+				aristas.add(arista.getHasta());
+			}
 		}
 
 		return aristas;

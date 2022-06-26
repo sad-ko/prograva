@@ -31,21 +31,24 @@ public class Searching {
 		}
 	}
 
+	//O(a+n)
 	public static void DFS(Grafo grafo, int root) {
 		boolean[] visitado = new boolean[grafo.size()];
 		Deque<Integer> stack = new LinkedList<>();
 
 		visitado[root] = true;
-		stack.push(root);
+		stack.push(root); //O(1)
 
+		//O(a+n)
 		while (!stack.isEmpty()) {
-			int v = stack.pop();
+			int v = stack.pop(); //O(1)
 
-			List<Integer> aristas = grafo.getAristasDe(v);
-			for (Integer w : aristas) {
+			List<Integer> aristas = grafo.getAristasDe(v); //O(n)
+			
+			for (Integer w : aristas) { //O(a)
 				if (!visitado[w]) {
 					visitado[w] = true;
-					stack.add(w);
+					stack.push(w); //O(1)
 				}
 			}
 		}

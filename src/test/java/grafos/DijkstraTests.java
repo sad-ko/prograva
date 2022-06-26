@@ -104,7 +104,7 @@ public class DijkstraTests {
 		
 		int root = 7;
 		
-		Grafo grafo = new ListaAdyacente(senderos, 10);
+		Grafo grafo = new ListaAdyacenteNoDirigida(senderos, 10);
 		ShortestPath d = new ShortestPath();
 		double[] distancias = d.dijkstra(grafo, root);
 
@@ -113,6 +113,27 @@ public class DijkstraTests {
 	
 	@Test
 	public void test06() {
+		Arista[] senderos = new Arista[10];
+		senderos[0] = new Arista(0,1,3);
+		senderos[1] = new Arista(0,2,2);
+		senderos[2] = new Arista(1,2,4);
+		senderos[3] = new Arista(1,5,1);
+		senderos[4] = new Arista(2,5,2);
+		senderos[5] = new Arista(2,3,2);
+		senderos[6] = new Arista(2,7,1);
+		senderos[7] = new Arista(3,4,2);
+		senderos[8] = new Arista(5,8,3);
+		senderos[9] = new Arista(5,7,5);
+		
+		Grafo grafoDirigido = new ListaAdyacente(senderos, 10);
+		Grafo grafoNODirigido = new ListaAdyacenteNoDirigida(senderos, 10);
+		
+		assertEquals(25, grafoDirigido.costo(), 0);
+		assertEquals(25, grafoNODirigido.costo(), 0);
+	}
+	
+	@Test
+	public void test07() {
 		double[][] g = {
 				{0,3,2,0,0,0,0,0,0},
 				{3,0,4,0,0,1,0,0,0},

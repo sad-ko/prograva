@@ -74,5 +74,22 @@ public class PrimTests {
 
 		assertEquals(14, result.costo(), 0);
 	}
+	
+	@Test
+	public void test05() {
+		double[][] g = {
+				{0,4,4,0,0,0},
+				{4,0,2,0,0,0},
+				{4,2,0,3,2,4},
+				{0,0,3,0,0,3},
+				{0,0,2,0,0,3},
+				{0,0,4,3,3,0}
+		};
+		
+		Grafo grafo = new MatrizAdyacente(g);
+		Grafo result = MSP.prim(grafo, new Arista(3, 0));
+
+		assertEquals(14, result.costo(), 0);
+	}
 
 }
